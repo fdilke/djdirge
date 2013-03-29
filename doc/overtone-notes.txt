@@ -1,0 +1,12 @@
+=== Finished
+sampling:
+(def uh (sample "/Users/fdilkeuk/Downloads/uh.wav" ))
+playing back at variable frequencies:
+(doseq [x (range 1.5 0.5 -0.1)] (println x) (Thread/sleep 150) (uh x 0 0 1)) 
+
+=== Experiments
+(examples) from overtone.repl.examples prints text -
+how to control drum with the mouse? how does membrane-hexagon work?
+
+=== Questions
+what are the args to a ugen like 'uh' above?
