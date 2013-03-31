@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src"/>
+  <classpathentry kind="src" path="test"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="lib" path="lib/at-at-1.1.1.jar"/>
+  <classpathentry kind="lib" path="lib/byte-spec-0.3.1.jar"/>
+  <classpathentry kind="lib" path="lib/clj-glob-1.0.0.jar"/>
+  <classpathentry kind="lib" path="lib/clj-native-0.9.3.jar"/>
+  <classpathentry kind="lib" path="lib/clojure-1.4.0.jar"/>
+  <classpathentry kind="lib" path="lib/commons-net-3.0.1.jar"/>
+  <classpathentry kind="lib" path="lib/core.incubator-0.1.0.jar"/>
+  <classpathentry kind="lib" path="lib/core.logic-0.6.5.jar"/>
+  <classpathentry kind="lib" path="lib/core.match-0.2.0-alpha11.jar"/>
+  <classpathentry kind="lib" path="lib/data.json-0.1.2.jar"/>
+  <classpathentry kind="lib" path="lib/dev"/>
+  <classpathentry kind="lib" path="lib/forms-1.2.1.jar"/>
+  <classpathentry kind="lib" path="lib/j18n-1.0.1.jar"/>
+  <classpathentry kind="lib" path="lib/jmdns-3.4.1.jar"/>
+  <classpathentry kind="lib" path="lib/jna-3.4.0.jar"/>
+  <classpathentry kind="lib" path="lib/libs.handlers-0.2.0.jar"/>
+  <classpathentry kind="lib" path="lib/midi-clj-0.5.0.jar"/>
+  <classpathentry kind="lib" path="lib/miglayout-3.7.4.jar"/>
+  <classpathentry kind="lib" path="lib/osc-clj-0.9.0.jar"/>
+  <classpathentry kind="lib" path="lib/overtone-0.8.1.jar"/>
+  <classpathentry kind="lib" path="lib/rsyntaxtextarea-2.0.3.jar"/>
+  <classpathentry kind="lib" path="lib/scsynth-3.5.7.0.jar"/>
+  <classpathentry kind="lib" path="lib/scsynth-extras-3.5.7.0.jar"/>
+  <classpathentry kind="lib" path="lib/seesaw-1.4.2.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-action-1.6.3.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-autocomplete-1.6.3.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-common-1.6.3.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-core-1.6.3.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-painters-1.6.3.jar"/>
+  <classpathentry kind="lib" path="lib/swingx-plaf-1.6.3.jar"/>
+  <classpathentry kind="output" path="classes"/>
+</classpath>

@@ -29,9 +29,9 @@
           :default   (recur b (mod a b))
 )))
 
-(defn cyclotomic
+(defn grytczuk
   "Compute the nth cyclotomic polynomial using the Grytczuk-Tropak recurrence.
-  Note, this only works for n square-free, but for current purposes that's ok."
+  Note, this only works for n square-free."
   [n] (let [
     d (phi n)
     mu-n (mobius n)
@@ -44,3 +44,28 @@
           ] (recur (inc m) (conj poly
              (* -1 mu-n (/ (apply + sum) m))                               
 )))))))
+
+(defn cyclotomic
+  [N] (let [
+    n (apply * (set (factorize N)))
+    k (/ N n)
+    poly (grytczuk n)
+  ] (for [i (range (inc (* k (dec (count poly)))))]
+       (if (< 0 (rem i k)) 0 (nth poly (/ i k)))
+)))
+
+(defn cyc-seq
+  "Generate a 'cyclotomic sequence' of length n, using a linear
+  recurrence derived from the nth cyclotomic polynomial"
+  [n] (let [
+    poly (cyclotomic n)            
+    phi-n-1 (count poly) ; phi(n) + 1   
+    phi-n (dec phi-n-1)
+  ] (loop [i phi-n-1
+           seq (range phi-n)
+    ] (if (> i n) seq (let [
+         q (apply - 0 (map * (take phi-n poly) 
+               (take-last phi-n seq)))                            
+         ] (recur (inc i) (concat seq [q]))
+)))))
+
