@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Muzurphus UI</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/skeleton.css">
+
+        <link rel="icon" type="image/png" href="images/favicon.png">
+    </head>
+    <body>
+        <script type='text/javascript'>
+            function doIt(
+                button
+            ){
+                alert("Button pressed")
+            }
+        </script>
+        <div class="container">
+            <div class="row">
+                <div style="margin-top: 5%">
+                    <h4>Muzurphus UI</h4>
+
+                    <p>Available widgets:</p>
+                    <table id="widgets" class="bordered">
+                        <thead>
+                            <tr>
+                                <th>Widget</th>
+                                <th>Size</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#widgets}}
+                                <tr>
+                                    <td width="300">{{name}}</td>
+                                    <td width="300">{{size}}</td>
+                                    <td width="300">
+                                        <a
+                                            id="release-button"
+                                            class="button button-primary"
+                                            onclick="doIt(this); return false;">
+                                            Activate!
+                                        </a>
+                                    </td>
+                                </tr>
+                            {{/widgets}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

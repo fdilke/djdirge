@@ -1,0 +1,93 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.maiflai:gradle-scalatest:0.9"
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'application'
+apply plugin: "com.github.maiflai.scalatest"
+
+ext {
+    scalaCompiler = "2.12.4"
+    scalaVersion = "2.12"
+
+    scalaTestVersion = "3.2.0-SNAP3"
+    jettyVersion = "9.2.10.v20150310"
+    scalatraVersion = "2.3.1"
+    commonsIoVersion = "2.4"
+    javaxServletApiVersion = "3.1.0"
+}
+
+def scalaLibrary(name) {
+    return name + "_" + scalaVersion
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "http://repo.typesafe.com/typesafe/releases" }
+    maven { url "http://repo.akka.io/repository" }
+    maven { url "http://oss.sonatype.org/content/public" }
+    maven { url "http://dl.bintray.com/readytalk/maven" }
+}
+
+buildDir = 'target'
+
+project.version = (version == "unspecified") ? "SNAPSHOT" : version // default to snapshot
+project.archivesBaseName = 'djdirge'
+project.applicationName = 'djdirge'
+project.mainClassName = 'com.fdilke.muzurphus.MuzurphusApiService'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+test {
+    maxParallelForks = 1
+}
+
+dependencies {
+
+    compile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+
+    compile (group: "ch.qos.logback", name: "logback-classic", version: "1.1.3") {
+        exclude group: "org.slf4j"
+    }
+
+    compile group: "org.scala-lang", name: "scala-library", version: scalaCompiler
+
+    compile(group: "org.scala-lang.modules", name: scalaLibrary("scala-xml"), version: "1.0.6") {
+        exclude group: "org.scala-lang", module: "scala-library"
+    }
+
+    compile(group: "org.scala-lang.modules", name: scalaLibrary("scala-parser-combinators"), version: "1.0.4") {
+        exclude group: "org.scala-lang", module: "scala-library"
+    }
+
+    testCompile (group: "org.scalatest", name: scalaLibrary("scalatest"), version: scalaTestVersion) {
+        exclude group: "org.scala-lang", module: "scala-library"
+        exclude group: "org.scala-lang", module: "scala-reflect"
+        exclude group: "org.scala-lang.modules", module: scalaLibrary("scala-xml")
+        exclude group: "org.scala-lang.modules", module: scalaLibrary("scala-parser-combinators")
+    }
+
+    testCompile (group: "org.mockito", name: "mockito-core", version: "2.7.1") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
+
+    testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
+    testRuntime 'org.pegdown:pegdown:1.1.0' // scalatest will hang without this. wtf
+}
+
+compileScala { // or: tasks.withType(ScalaCompile)
+    scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
+// Adding this because we think that library version conflicts and duplicates have been resolved :)
+configurations.all { resolutionStrategy.failOnVersionConflict() }
