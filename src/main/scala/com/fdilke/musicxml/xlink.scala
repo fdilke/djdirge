@@ -23,7 +23,9 @@ trait Type
 object Type {
   def fromString(value: String, scope: scala.xml.NamespaceBinding): Type = value match {
     case "simple" => Simple
-
+    case other =>
+      println("ZZZ type: unknown string [" + other + "], returning Simple")
+      Simple
   }
 }
 
@@ -38,7 +40,9 @@ object Show {
     case "embed" => Embed
     case "other" => OtherValue5
     case "none" => NoneTypeValue15
-
+    case other =>
+      println("ZZZ show: unknown string [" + other + "], returning NoneTypeValue15")
+      NoneTypeValue15
   }
 }
 
