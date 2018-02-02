@@ -8,25 +8,55 @@ import scalaxb.XMLFormat
 
 class ParseMusicTest extends FreeSpec {
 
-  private def parses[T : XMLFormat : ClassTag](fragmentName: String) =
-    ParseMusic[T](s"fragments/$fragmentName.xml") shouldBe a[T]
+  private def parsesFile[T : XMLFormat : ClassTag](path: String) =
+    ParseMusic[T](path) shouldBe a[T]
+
+  private def parsesFragment[T : XMLFormat : ClassTag](fragmentName: String) =
+    parsesFile[T](s"fragments/$fragmentName.xml")
 
   "ParseMusic" - {
     "makes sense of an Encoding" in {
-      parses[Encoding]("Encoding")
+      parsesFragment[Encoding]("Encoding")
+    }
+
+    "makes sense of an Encoding (2)" in {
+      parsesFragment[Encoding]("Encoding2")
     }
 
     "makes sense of an Identification" in {
-      parses[Identification]("Identification")
+      parsesFragment[Identification]("Identification")
+    }
+
+    "makes sense of an Identification (2)" in {
+      parsesFragment[Identification]("Identification2")
     }
 
     "makes sense of a Defaults" in {
-      parses[Defaults]("Defaults")
+      parsesFragment[Defaults]("Defaults")
+    }
+
+    "makes sense of a Defaults (2)" in {
+      parsesFragment[Defaults]("Defaults2")
     }
 
     "makes sense of a Credit" in {
-      parses[Credit]("Credit")
+      parsesFragment[Credit]("Credit")
     }
+
+//    "makes sense of a Scoreu45part" in {
+//      parsesFragment[Partu45list]("Scoreu45part")
+//    }
+//    "makes sense of a Scoreu45part (2)" in {
+//      parsesFragment[Scoreu45part]("Scoreu45part2")
+//    }
+
+//    "makes sense of a Partu45list" in {
+//      parses[Partu45list]("Partu45list")
+//    }
+
+//    "makes sense of a file" in {
+//      parsesFile[Scoreu45partwise](s"music/Telemann.xml")
+//    }
 
 //    "makes sense of a file" in {
 //      try {
