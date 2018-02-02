@@ -2,11 +2,11 @@ package com.fdilke.musicxml
 
 import org.scalatest.FreeSpec
 
-class ParseMusic2Test extends FreeSpec {
+class ParseMusicTest extends FreeSpec {
 
   "ParseMusic2" - {
     "makes sense of an Encoding" in {
-      ParseMusic2("music/Telemann.xml")
+      ParseMusic("music/Minuet_in_G_Major_Bach.xml")
     }
   }
 }

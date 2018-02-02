@@ -1,21 +1,13 @@
 package com.fdilke.musicxml
 
-import javax.sound.midi.MidiSystem
-import javax.xml.parsers.SAXParserFactory
-
-import nu.xom.Document
-import org.jfugue.integration.{MusicXmlParser, MusicXmlParserListener}
-import org.jfugue.parser.ParserListener
-import org.jfugue.pattern.Pattern
+import org.jfugue.integration.MusicXmlParser
 import org.jfugue.player.Player
 import org.jfugue.theory.ChordProgression
 import org.staccato.StaccatoParserListener
 
 import scala.io.Source
-import scala.xml.XML
-import scalaxb.XMLFormat
 
-object ParseMusic2 {
+object ParseMusic {
   def apply(path: String) {
     val parser = new MusicXmlParser
 //    val listener = new MusicXmlParserListener
