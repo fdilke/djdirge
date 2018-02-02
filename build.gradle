@@ -53,6 +53,12 @@ test {
 
 dependencies {
 
+    compile files('libs/jfugue-5.0.9.jar')
+
+    compile (group: 'xom', name: 'xom', version: '1.2.5') {
+        exclude group: "xml-apis", module: "xml-apis"
+    }
+
     compile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
 
     compile (group: "ch.qos.logback", name: "logback-classic", version: "1.1.3") {
