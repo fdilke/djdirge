@@ -1,8 +1,9 @@
 package com.fdilke.musicxml
 
 import org.jfugue.integration.MusicXmlParser
+import org.jfugue.pattern.Pattern
 import org.jfugue.player.Player
-import org.jfugue.theory.ChordProgression
+import org.jfugue.theory.{ChordProgression, Note}
 import org.staccato.StaccatoParserListener
 
 import scala.io.Source
@@ -47,6 +48,32 @@ object TryThis extends App {
       "..X...X...X...XO"
     )
   )
+}
+
+object CrabCanon extends App {
+    // One voice of Bach’s Crab Canon
+    val canon = new Pattern("D5h E5h A5h Bb5h C#5h Rq A5q "+
+    "A5q Ab5h G5q G5q F#5h F5q F5q E5q Eb5q D5q "+
+  "C#5q A3q D5q G5q F5h E5h D5h F5h A5i G5i A5i "+
+    "D6i A5i F5i E5i F5i G5i A5i B5i C#6i D6i F5i "+
+    "G5i A5i Bb5i E5i F5i G5i A5i G5i F5i E5i F5i "+
+    "G5i A5i Bb5i C6i Bb5i A5i G5i A5i Bb5i C6i D6i "+
+    "Eb6i C6i Bb5i A5i B5i C#6i D6i E6i F6i D6i "+
+    "C#6i B5i C#6i D6i E6i F6i G6i E6i A5i E6i D6i "+
+    "E6i F6i G6i F6i E6i D6i C#6i D6q A5q F5q D5q")
+  // Create a new pattern that is the reverse of the first pattern
+  val reverseCanon = MusicUtils.reverse(canon)
+  // Lower the octaves of the reversed pattern
+  val octaveCanon = MusicUtils.lowerOctave(reverseCanon)
+  // Combine the two patterns
+  // instruments to try: Crystal, Fiddle, Reed_organ, Flute, Piano, Voice,
+  // Whistle, English_Horn, Banjo, Warm, Goblins, Atmosphere, Soprano_Sax
+  val pattern = new Pattern("T[VIVACE]")
+  pattern.add("V0 I[Reed_organ] " + canon.getPattern.toString)
+  pattern.add("V1 I[Echoes] " + octaveCanon.getPattern.toString)
+  // Play Bach’s Crab Canon
+  val player = new Player()
+  player.play(pattern)
 }
 
 object IntroToRhythms extends App {
