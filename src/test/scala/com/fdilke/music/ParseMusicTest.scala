@@ -1,4 +1,4 @@
-package com.fdilke.musicxml
+package com.fdilke.music
 
 import org.scalatest.FreeSpec
 

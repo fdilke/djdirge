@@ -1,10 +1,13 @@
-package com.fdilke.musicxml
+package com.fdilke.music
 
+import com.fdilke.music.util.MusicUtils
 import org.jfugue.integration.MusicXmlParser
 import org.jfugue.pattern.Pattern
 import org.jfugue.player.Player
 import org.jfugue.theory.{ChordProgression, Note}
 import org.staccato.StaccatoParserListener
+import com.fdilke.music.util.Enrichments._
+import org.jfugue.theory.Note.OCTAVE
 
 import scala.io.Source
 
@@ -30,7 +33,6 @@ object ParseMusic {
 
     val player = new Player()
     player.play(staccatoPattern)
-//    listener.
   }
 }
 
@@ -62,15 +64,19 @@ object CrabCanon extends App {
     "C#6i B5i C#6i D6i E6i F6i G6i E6i A5i E6i D6i "+
     "E6i F6i G6i F6i E6i D6i C#6i D6q A5q F5q D5q")
   // Create a new pattern that is the reverse of the first pattern
-  val reverseCanon = MusicUtils.reverse(canon)
+  val reverseCanon = // MusicUtils.reverse(canon)
+     canon.reverse
   // Lower the octaves of the reversed pattern
-  val octaveCanon = MusicUtils.lowerOctave(reverseCanon)
+  val octaveCanon = // MusicUtils.lowerOctave(reverseCanon)
+    reverseCanon.changeNotes( _ - OCTAVE )
   // Combine the two patterns
-  // instruments to try: Crystal, Fiddle, Reed_organ, Flute, Piano, Voice,
+  // instruments to try: Crystal, Fiddle, Reed_Organ, Flute, Piano, Voice,
   // Whistle, English_Horn, Banjo, Warm, Goblins, Atmosphere, Soprano_Sax
+  // Echoes, Skakuhachi, Rain, Square, Sawtooth, Oboe, Clarinet, Bagpipe
+  // Glockenspiel, Church_Organ
   val pattern = new Pattern("T[VIVACE]")
-  pattern.add("V0 I[Reed_organ] " + canon.getPattern.toString)
-  pattern.add("V1 I[Echoes] " + octaveCanon.getPattern.toString)
+  pattern.add("V0 I[Flute] " + canon.getPattern.toString)
+  pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString)
   // Play Bach’s Crab Canon
   val player = new Player()
   player.play(pattern)

@@ -1,7 +1,8 @@
-package com.fdilke.musicxml
+package com.fdilke.music.util
 
 import org.jfugue.pattern.Pattern
 import org.jfugue.theory.Note
+
 import scala.collection.JavaConverters._
 
 object MusicUtils {
