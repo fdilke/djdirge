@@ -1,11 +1,15 @@
 package com.fdilke.music
 
+import java.io.{BufferedInputStream, File, FileInputStream, InputStream}
+import javax.sound.midi.{MidiSystem, Synthesizer}
+
 import org.jfugue.integration.MusicXmlParser
 import org.jfugue.pattern.Pattern
-import org.jfugue.player.Player
+import org.jfugue.player.{Player, SequencerManager, SynthesizerManager}
 import org.jfugue.theory.{ChordProgression, Note}
 import org.staccato.StaccatoParserListener
 import com.fdilke.music.util.Enrichments._
+import org.jfugue.realtime.RealtimePlayer
 import org.jfugue.theory.Note.OCTAVE
 
 import scala.io.Source
@@ -72,7 +76,7 @@ object CrabCanon extends App {
   // Echoes, Skakuhachi, Rain, Square, Sawtooth, Oboe, Clarinet, Bagpipe
   // Glockenspiel, Church_Organ
   val pattern = new Pattern("T[VIVACE]")
-  pattern.add("V0 I[Flute] " + canon.getPattern.toString)
+  pattern.add("V0 I[Voice] " + canon.getPattern.toString)
   pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString)
   // Play Bach’s Crab Canon
   val player = new Player()
@@ -90,7 +94,39 @@ object IntroToRhythms extends App {
       ).addLayer(
         "...............+"
       )
-    new Player().play(
+    new RealtimePlayer().play(
       rhythm.getPattern.repeat(2)
     )
+}
+
+object Hack extends App {
+
+  val synth = MidiSystem.getSynthesizer()
+  val soundBankStream = new BufferedInputStream(
+    new FileInputStream(
+      new File(
+//        "/Users/Felix/Downloads/soundbank-deluxe.gm"
+//        "/Users/Felix/Downloads/Arianna'sFluidR3Mono_GM2.sf2"
+//        "/Users/Felix/Downloads/fluid-soundfont-3.1/FluidR3_GM.sf2"
+        "/Users/Felix/Downloads/FluidR3 GM.sf2"
+      )
+    )
+  )
+//  val hh =  MidiSystem.getSoundbank(
+//    soundBankStream
+//  )
+//    getClass().getClassLoader().getResourceAsStream(
+//      "/Users/Felix/Downloads/soundbank-deluxe.gm"
+//    )
+//  )
+  synth.open()
+  synth.loadAllInstruments(MidiSystem.getSoundbank(soundBankStream))
+//  synth.close()
+//  val soundbank = MidiSystem.getSynthesizer.getDefaultSoundbank
+//  println("soundbank = " + soundbank.getDescription + " ::== " +
+//    soundbank.getName)
+  // was: soundbank = Emergency generated soundbank ::== Emergency GM sound set
+  SynthesizerManager.getInstance().setSynthesizer(synth)
+  SequencerManager.getInstance().connectSequencerToSynthesizer()
+  CrabCanon.main(null)
 }
