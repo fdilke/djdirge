@@ -76,7 +76,7 @@ object CrabCanon extends App {
   // Echoes, Skakuhachi, Rain, Square, Sawtooth, Oboe, Clarinet, Bagpipe
   // Glockenspiel, Church_Organ
   val pattern = new Pattern("T[VIVACE]")
-  pattern.add("V0 I[Voice] " + canon.getPattern.toString)
+  pattern.add("V0 I[Bagpipe] " + canon.getPattern.toString)
   pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString)
   // Play Bach’s Crab Canon
   val player = new Player()
