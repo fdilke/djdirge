@@ -9,6 +9,7 @@ import org.jfugue.player.{Player, SequencerManager, SynthesizerManager}
 import org.jfugue.theory.{ChordProgression, Note}
 import org.staccato.StaccatoParserListener
 import com.fdilke.music.util.Enrichments._
+import org.jfugue.midi.MidiFileManager
 import org.jfugue.realtime.RealtimePlayer
 import org.jfugue.theory.Note.OCTAVE
 
@@ -77,10 +78,15 @@ object CrabCanon extends App {
   // Glockenspiel, Church_Organ
   val pattern = new Pattern("T[VIVACE]")
   pattern.add("V0 I[Bagpipe] " + canon.getPattern.toString)
-  pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString)
+  pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString + " R")
   // Play Bach’s Crab Canon
-  val player = new Player()
-  player.play(pattern)
+//  val player = new Player()
+//  player.play(pattern)
+
+  MidiFileManager.savePatternToMidi(
+    pattern,
+    new File("/Users/Felix/Downloads/crab.midi")
+  )
 }
 
 object IntroToRhythms extends App {
@@ -134,10 +140,10 @@ object Hack extends App {
 object TryConversion extends App {
   MidiToWavConverter.midi2wav(
     new FileInputStream(
-      new File("/Users/Felix/Downloads/level1.midi")
+      new File("/Users/Felix/Downloads/crab.midi")
     ),
     new FileOutputStream(
-      new File("/Users/Felix/Downloads/experimental.wav")
+      new File("/Users/Felix/Downloads/crab.wav")
     )
   )
 }
