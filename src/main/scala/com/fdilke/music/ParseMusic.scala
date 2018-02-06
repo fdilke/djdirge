@@ -1,6 +1,6 @@
 package com.fdilke.music
 
-import java.io.{BufferedInputStream, File, FileInputStream, InputStream}
+import java.io._
 import javax.sound.midi.{MidiSystem, Synthesizer}
 
 import org.jfugue.integration.MusicXmlParser
@@ -129,4 +129,15 @@ object Hack extends App {
   SynthesizerManager.getInstance().setSynthesizer(synth)
   SequencerManager.getInstance().connectSequencerToSynthesizer()
   CrabCanon.main(null)
+}
+
+object TryConversion extends App {
+  MidiToWavConverter.midi2wav(
+    new FileInputStream(
+      new File("/Users/Felix/Downloads/level1.midi")
+    ),
+    new FileOutputStream(
+      new File("/Users/Felix/Downloads/experimental.wav")
+    )
+  )
 }
