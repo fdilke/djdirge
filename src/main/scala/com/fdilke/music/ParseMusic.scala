@@ -57,10 +57,11 @@ object TryThis extends App {
 }
 
 object CrabCanon extends App {
-    // One voice of Bach’s Crab Canon
-    val canon = new Pattern("D5h E5h A5h Bb5h C#5h Rq A5q "+
+  // One voice of Bach’s Crab Canon
+  val canon = new Pattern(
+    "D5h E5h A5h Bb5h C#5h Rq A5q "+
     "A5q Ab5h G5q G5q F#5h F5q F5q E5q Eb5q D5q "+
-  "C#5q A3q D5q G5q F5h E5h D5h F5h A5i G5i A5i "+
+    "C#5q A3q D5q G5q F5h E5h D5h F5h A5i G5i A5i "+
     "D6i A5i F5i E5i F5i G5i A5i B5i C#6i D6i F5i "+
     "G5i A5i Bb5i E5i F5i G5i A5i G5i F5i E5i F5i "+
     "G5i A5i Bb5i C6i Bb5i A5i G5i A5i Bb5i C6i D6i "+
@@ -75,18 +76,42 @@ object CrabCanon extends App {
   // instruments to try: Crystal, Fiddle, Reed_Organ, Flute, Piano, Voice,
   // Whistle, English_Horn, Banjo, Warm, Goblins, Atmosphere, Soprano_Sax
   // Echoes, Skakuhachi, Rain, Square, Sawtooth, Oboe, Clarinet, Bagpipe
-  // Glockenspiel, Church_Organ
+  // Glockenspiel, Church_Organ, Marimba, Dulcimer, Fretless_Bass,
+  // Orchestral_Strings, String_Ensemble_1, String_Ensemble_2,
+  // Synth_Strings_1, Choir_Aahs, Percussive_Organ, Harmonica
   val pattern = new Pattern("T[VIVACE]")
-  pattern.add("V0 I[Bagpipe] " + canon.getPattern.toString)
-  pattern.add("V1 I[Glockenspiel] " + octaveCanon.getPattern.toString + " R")
-  // Play Bach’s Crab Canon
-//  val player = new Player()
-//  player.play(pattern)
+  pattern.add("V0 I[Harmonica] " + canon.getPattern.toString + " R D5w.")
+  pattern.add("V1 I[Choir_Aahs] " + octaveCanon.getPattern.toString)
 
-  MidiFileManager.savePatternToMidi(
-    pattern,
-    new File("/Users/Felix/Downloads/crab.midi")
-  )
+  val rhythm =
+    new Rhythm().addLayer(
+      "O..oO...O..oOO.."
+    ).addLayer(
+      "..S...S...S...S."
+    ).addLayer(
+      "````````````````"
+    ).addLayer(
+      "...............+"
+    )
+
+  pattern.add(rhythm.getPattern repeat 9)
+
+//  rhythm.addLayer("O.OO...O.OO....O")
+//  rhythm.addLayer("....o.......o...")
+//  rhythm.addLayer("^.`.^.`.^.`.^.`.")
+
+  val player = new Player()
+  player.play(pattern)
+
+//  MidiFileManager.savePatternToMidi(
+//    pattern,
+//    new File("/Users/Felix/Downloads/crab2.midi")
+//  )
+
+//    savePatternToWav(
+//    pattern,
+//    "/Users/Felix/Downloads/crab2.wav"
+//  )
 }
 
 object IntroToRhythms extends App {
@@ -105,7 +130,7 @@ object IntroToRhythms extends App {
     )
 }
 
-object Hack extends App {
+object LoadSoundfont extends App {
 
   val synth = MidiSystem.getSynthesizer()
   val soundBankStream = new BufferedInputStream(

@@ -1,8 +1,6 @@
 package com.fdilke.music
 
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
+import java.io._
 import java.util.concurrent.atomic.{AtomicInteger, AtomicLong}
 import javax.sound.midi.InvalidMidiDataException
 import javax.sound.midi.MetaMessage
@@ -25,28 +23,41 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import com.sun.media.sound.AudioSynthesizer
 import com.sun.swing.internal.plaf.synth.resources.synth
+import org.jfugue.midi.MidiFileManager
+import org.jfugue.pattern.{Pattern, PatternProducer}
 import org.jfugue.player.SynthesizerManager
 
 import scala.language.postfixOps;
 
 object MidiToWavConverter {
 
+  def savePatternToWav(
+    patternProducer: PatternProducer,
+    path: String
+  ) {
+    val byteOut = new ByteArrayOutputStream
+    MidiFileManager.savePatternToMidi(
+      patternProducer,
+      byteOut
+    )
+    midi2wav(
+      new ByteArrayInputStream(byteOut.toByteArray),
+      new FileOutputStream(
+        new File(path)
+      )
+    )
+  }
+
   def midi2wav(in: InputStream, out: OutputStream) {
     val sequence = MidiSystem.getSequence(in)
     render(sequence, out)
   }
 
-//  private def loadSoundbankInstruments(synthesizer: Synthesizer ) {
-//    for (soundbank <- soundbanks) {
-//      synthesizer.loadAllInstruments(soundbank);
-//    }
-//  }
   private def render(sequence : Sequence , out: OutputStream) {
       val synth = findAudioSynthesizer()
 
       var stream = synth.openStream(null, null)
 
-//      Generator.loadSoundbankInstruments(synth);
       val total = send(sequence, synth.getReceiver());
 
       // Calculate how long the WAVE file needs to be.
@@ -58,19 +69,16 @@ object MidiToWavConverter {
       synth.close()
   }
 
-  private def findAudioSynthesizer() = {
-    val synth = MidiSystem.getSynthesizer
-    synth match {
+  private def findAudioSynthesizer() =
+    MidiSystem.getSynthesizer match {
       case dev: AudioSynthesizer => dev
       case _ =>
-        val infos = MidiSystem.getMidiDeviceInfo
-        infos.map { info =>
+        MidiSystem.getMidiDeviceInfo.map { info =>
           MidiSystem.getMidiDevice(info)
         } collect {
           case dev: AudioSynthesizer => dev
         } head
     }
-  }
 
   private def send(seq: Sequence, recv: Receiver): Double = {
     val divtype = seq.getDivisionType()
