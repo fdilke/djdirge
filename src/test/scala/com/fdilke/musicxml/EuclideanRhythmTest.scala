@@ -40,5 +40,9 @@ class EuclideanRhythmTest extends FreeSpec {
       EuclideanRhythm(7,16).string(4,3,'%') shouldBe
         "%..%.%.%.%..%.%.%..%.%.%.%..%.%.%..%.%.%.%..%.%."
     }
+
+    "can rotate by an excessive amount" in {
+      EuclideanRhythm(2, 3).string(4, 1, '#') shouldBe "#.#"
+    }
   }
 }

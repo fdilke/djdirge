@@ -25,7 +25,11 @@ case class EuclideanRhythm(
       }.mkString("")
 
     val rotatedCycle =
-      baseCycle.substring(rotate) + baseCycle.substring(0,rotate)
+      baseCycle.substring(
+        rotate % cycleLength
+      ) + baseCycle.substring(
+        0,rotate % cycleLength
+      )
 
     rotatedCycle * repeat
   }
